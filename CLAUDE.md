@@ -7,8 +7,10 @@ TypeScript learning repository for studying syntax and patterns, organized by to
 ## Commands
 
 - `npx ts-node src/<path>/<file>.ts` — Run a single file directly
+- `npm run check` — Type-check without emitting `dist/`
 - `npm run build` — Compile all files under `src/` to `dist/`
 - `npm run watch` — Watch mode, recompile on changes
+- `npm run exercise:solutions` — Run exercise reference answers
 
 ## Structure
 
@@ -18,5 +20,7 @@ Each topic is in a numbered directory under `src/`. Files are self-contained and
 
 - All source files are in `src/`, compiled output goes to `dist/`
 - Each `.ts` file includes runnable `console.log` examples at the bottom
-- Exercises in `08-exercises/` are commented out — uncomment and complete them
+- Exercises in `08-exercises/exercises.ts` are commented out — uncomment and complete them
+- Reference answers live in `08-exercises/solutions.ts`
 - Keep examples simple and focused on one concept per file
+- Prefer descriptive names and expanded control flow over terse shorthand for beginner-facing examples

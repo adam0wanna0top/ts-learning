@@ -4,6 +4,8 @@
   "description": "TypeScript code and syntax learning",
   "scripts": {
     "build": "tsc",
+    "check": "tsc --noEmit",
+    "exercise:solutions": "ts-node src/08-exercises/solutions.ts",
     "watch": "tsc --watch",
     "run": "ts-node"
   },

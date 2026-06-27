@@ -4,18 +4,25 @@
 
 // --- 导出 ---
 // math-utils.ts (示例)
-export function add(a: number, b: number): number {
-  return a + b;
+export function add(leftNumber: number, rightNumber: number): number {
+  return leftNumber + rightNumber;
 }
-export function multiply(a: number, b: number): number {
-  return a * b;
+
+export function multiply(leftNumber: number, rightNumber: number): number {
+  return leftNumber * rightNumber;
 }
+
 export const PI = 3.14159;
 
 // 默认导出
 export default class Calculator {
-  static add = add;
-  static multiply = multiply;
+  static add(leftNumber: number, rightNumber: number): number {
+    return add(leftNumber, rightNumber);
+  }
+
+  static multiply(leftNumber: number, rightNumber: number): number {
+    return multiply(leftNumber, rightNumber);
+  }
 }
 
 // --- 导入 ---

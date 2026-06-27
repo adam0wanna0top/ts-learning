@@ -2,6 +2,8 @@
 
 TypeScript 语法与代码练习，从基础到高级，循序渐进。
 
+这个仓库更偏“可读、可运行、可修改”的学习材料：示例代码会优先使用完整命名和展开写法，帮助初学者看清楚类型、值、函数调用之间的关系。
+
 ## 目录结构
 
 ```
@@ -23,7 +25,8 @@ src/
 ├── 07-advanced/        # 高级类型
 │   └── advanced.ts     # 条件类型、映射类型、infer、模板字面量类型
 └── 08-exercises/       # 练习题
-    └── exercises.ts    # 待完成的练习，取消注释并修复
+    ├── exercises.ts    # 待完成的练习，取消注释并修复
+    └── solutions.ts    # 练习参考答案
 ```
 
 ## 快速开始
@@ -35,12 +38,25 @@ npm install
 # 运行单个文件
 npx ts-node src/01-basics/variables.ts
 
+# 只检查类型，不生成 dist
+npm run check
+
 # 编译全部
 npm run build
 
 # 监听模式（自动编译）
 npm run watch
+
+# 运行练习参考答案
+npm run exercise:solutions
 ```
+
+## 学习方式
+
+1. **先读注释，再读代码**：每个文件都围绕一个主题组织，建议从上到下阅读。
+2. **运行示例**：用 `npx ts-node src/<目录>/<文件>.ts` 观察输出。
+3. **改一个地方再运行**：比如改变量类型、函数返回值、对象属性，观察 TypeScript 报错。
+4. **最后做练习**：先完成 `src/08-exercises/exercises.ts`，卡住时再看 `solutions.ts`。
 
 ## 学习路线
 

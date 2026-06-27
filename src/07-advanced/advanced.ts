@@ -3,16 +3,17 @@
 // ==============================
 
 // --- 条件类型 ---
-type IsString<T> = T extends string ? "yes" : "no";
-type A = IsString<string>; // "yes"
-type B = IsString<number>; // "no"
+type IsString<ValueType> = ValueType extends string ? "yes" : "no";
+type StringCheckResult = IsString<string>; // "yes"
+type NumberCheckResult = IsString<number>; // "no"
 
 // --- 映射类型 ---
-type Readonly_<T> = {
-  readonly [K in keyof T]: T[K];
+type ReadonlyCopy<ObjectType> = {
+  readonly [PropertyName in keyof ObjectType]: ObjectType[PropertyName];
 };
-type Partial_<T> = {
-  [K in keyof T]?: T[K];
+
+type PartialCopy<ObjectType> = {
+  [PropertyName in keyof ObjectType]?: ObjectType[PropertyName];
 };
 
 // --- Record, Pick, Omit 内置类型 ---
@@ -24,8 +25,12 @@ const roleLabels: Record<UserRole, string> = {
 };
 
 // --- infer 关键字 ---
-type ReturnType_<T> = T extends (...args: any[]) => infer R ? R : never;
-type UnpackPromise<T> = T extends Promise<infer U> ? U : T;
+type ReturnValue<FunctionType> = FunctionType extends (...args: any[]) => infer ResultType
+  ? ResultType
+  : never;
+type UnpackPromise<ValueType> = ValueType extends Promise<infer ResolvedValue>
+  ? ResolvedValue
+  : ValueType;
 type PromiseResult = UnpackPromise<Promise<string>>; // string
 
 // --- 模板字面量类型 ---
@@ -33,8 +38,10 @@ type EventName = "click" | "focus";
 type EventHandler = `on${Capitalize<EventName>}`; // "onClick" | "onFocus"
 
 // --- 递归类型 ---
-type DeepReadonly<T> = {
-  readonly [K in keyof T]: T[K] extends object ? DeepReadonly<T[K]> : T[K];
+type DeepReadonly<ObjectType> = {
+  readonly [PropertyName in keyof ObjectType]: ObjectType[PropertyName] extends object
+    ? DeepReadonly<ObjectType[PropertyName]>
+    : ObjectType[PropertyName];
 };
 
 const nested: DeepReadonly<{ a: { b: number } }> = { a: { b: 1 } };
@@ -53,6 +60,7 @@ const palette = {
 // using resource = getResource(); // 离开作用域自动 [Symbol.dispose]()
 
 console.log("=== 07-advanced ===");
-console.log(`IsString<string> = ${("yes" as IsString<string>)}`);
+console.log(`IsString<string> = ${("yes" as StringCheckResult)}`);
+console.log(`IsString<number> = ${("no" as NumberCheckResult)}`);
 console.log(`roleLabels: ${JSON.stringify(roleLabels)}`);
 console.log(`palette: ${JSON.stringify(palette)}`);

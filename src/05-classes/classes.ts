@@ -2,9 +2,17 @@
 // 05 - 类 (Classes)
 // ==============================
 
+console.log("=== 05-classes ===");
+
 // 基本类
 class Animal {
-  constructor(public name: string, protected speed: number) {}
+  public name: string;
+  protected speed: number;
+
+  constructor(name: string, speed: number) {
+    this.name = name;
+    this.speed = speed;
+  }
 
   move(): string {
     return `${this.name} moves at ${this.speed} km/h`;
@@ -16,8 +24,11 @@ console.log(cat.move());
 
 // 继承
 class PetDog extends Animal {
-  constructor(name: string, speed: number, private breed: string) {
+  private breed: string;
+
+  constructor(name: string, speed: number, breed: string) {
     super(name, speed);
+    this.breed = breed;
   }
 
   bark(): string {
@@ -31,28 +42,44 @@ console.log(dog.move());
 
 // 抽象类
 abstract class Shape {
-  constructor(public color: string) {}
+  public color: string;
+
+  constructor(color: string) {
+    this.color = color;
+  }
+
   abstract area(): number;
+
   describe(): string {
     return `${this.color} shape, area = ${this.area().toFixed(2)}`;
   }
 }
 
 class Circle extends Shape {
-  constructor(color: string, private radius: number) {
+  private radius: number;
+
+  constructor(color: string, radius: number) {
     super(color);
+    this.radius = radius;
   }
+
   area(): number {
     return Math.PI * this.radius ** 2;
   }
 }
 
 class Rectangle extends Shape {
-  constructor(color: string, private w: number, private h: number) {
+  private width: number;
+  private height: number;
+
+  constructor(color: string, width: number, height: number) {
     super(color);
+    this.width = width;
+    this.height = height;
   }
+
   area(): number {
-    return this.w * this.h;
+    return this.width * this.height;
   }
 }
 
@@ -65,7 +92,14 @@ interface Printable {
 }
 
 class Report implements Printable {
-  constructor(private title: string, private content: string) {}
+  private title: string;
+  private content: string;
+
+  constructor(title: string, content: string) {
+    this.title = title;
+    this.content = content;
+  }
+
   toString(): string {
     return `[Report] ${this.title}: ${this.content}`;
   }
@@ -75,13 +109,23 @@ console.log(new Report("Q1", "Revenue up 20%").toString());
 
 // 存取器 (getters / setters)
 class Temperature {
-  private _celsius = 0;
-  get celsius(): number { return this._celsius; }
-  set celsius(value: number) {
-    if (value < -273.15) throw new Error("Below absolute zero!");
-    this._celsius = value;
+  private currentCelsius = 0;
+
+  get celsius(): number {
+    return this.currentCelsius;
   }
-  get fahrenheit(): number { return this._celsius * 1.8 + 32; }
+
+  set celsius(value: number) {
+    if (value < -273.15) {
+      throw new Error("Below absolute zero!");
+    }
+
+    this.currentCelsius = value;
+  }
+
+  get fahrenheit(): number {
+    return this.currentCelsius * 1.8 + 32;
+  }
 }
 
 const temp = new Temperature();
@@ -90,7 +134,8 @@ console.log(`Temperature: ${temp.celsius}°C = ${temp.fahrenheit}°F`);
 
 // 静态成员
 class MathUtils {
-  static PI = 3.14159;
+  static readonly PI = 3.14159;
+
   static clamp(value: number, min: number, max: number): number {
     return Math.max(min, Math.min(max, value));
   }

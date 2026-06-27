@@ -3,15 +3,18 @@
 // ==============================
 
 // --- 联合类型 (Union) ---
-let id: string | number;
-id = "abc";
-id = 123;
+let identifier: string | number;
+identifier = "abc";
+identifier = 123;
 
 // --- 类型收窄 (Narrowing) ---
-function getLength(value: string | number[]): number {
+function getValueLength(value: string | number[]): number {
   if (typeof value === "string") {
+    console.log("当前 value 是字符串");
     return value.length; // TS 知道这里是 string
   }
+
+  console.log("当前 value 是数字数组");
   return value.length; // TS 知道这里是 number[]
 }
 
@@ -20,7 +23,7 @@ type Status = "active" | "inactive" | "pending";
 let userStatus: Status = "active";
 
 type ResponseCode = 200 | 404 | 500;
-let code: ResponseCode = 200;
+let responseCode: ResponseCode = 200;
 
 // --- 交叉类型 (Intersection) ---
 type Name = { firstName: string; lastName: string };
@@ -36,16 +39,31 @@ const personInfo: Person = {
 // --- 类型别名 (Type Alias) ---
 type Point = { x: number; y: number };
 type ID = string | number;
-type Callback = (data: string) => void;
+type TextCallback = (text: string) => void;
+
+const point: Point = { x: 10, y: 20 };
+const numericId: ID = 1001;
+const printText: TextCallback = (text) => {
+  console.log(`Callback received: ${text}`);
+};
 
 // --- typeof 和 keyof ---
-const config = { host: "localhost", port: 3000 };
-type Config = typeof config;
-type ConfigKeys = keyof Config; // "host" | "port"
+const serverConfig = { host: "localhost", port: 3000 };
+type ServerConfig = typeof serverConfig;
+type ServerConfigKey = keyof ServerConfig; // "host" | "port"
+
+function getConfigValue(configKey: ServerConfigKey): ServerConfig[ServerConfigKey] {
+  return serverConfig[configKey];
+}
 
 console.log("=== 02-types ===");
-console.log(`ID: ${id}`);
-console.log(`getLength("hello") = ${getLength("hello")}`);
-console.log(`getLength([1,2,3]) = ${getLength([1, 2, 3])}`);
+console.log(`Identifier: ${identifier}`);
+console.log(`getValueLength("hello") = ${getValueLength("hello")}`);
+console.log(`getValueLength([1,2,3]) = ${getValueLength([1, 2, 3])}`);
 console.log(`Status: ${userStatus}`);
+console.log(`Response code: ${responseCode}`);
 console.log(`Person: ${personInfo.firstName} ${personInfo.lastName}, age ${personInfo.age}`);
+console.log(`Point: (${point.x}, ${point.y})`);
+console.log(`Numeric ID: ${numericId}`);
+printText("type alias example");
+console.log(`Config host: ${getConfigValue("host")}`);

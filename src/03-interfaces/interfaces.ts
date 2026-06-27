@@ -10,7 +10,11 @@ interface User {
   age?: number; // 可选属性
 }
 
-const user: User = { id: 1, name: "Alice", email: "alice@test.com" };
+const user: User = {
+  id: 1,
+  name: "Alice",
+  email: "alice@test.com",
+};
 
 // 接口继承
 interface Employee extends User {
@@ -18,25 +22,31 @@ interface Employee extends User {
   salary: number;
 }
 
-const emp = {
+const employee: Employee = {
   id: 2,
   name: "Bob",
   email: "bob@company.com",
   department: "Engineering",
   salary: 100000,
-} satisfies Employee;
+};
 
 // 接口描述函数
 interface SearchFunc {
-  (source: string, sub: string): boolean;
+  (sourceText: string, searchText: string): boolean;
 }
-const contains: SearchFunc = (src, sub) => src.includes(sub);
+
+const contains: SearchFunc = (sourceText, searchText) => {
+  return sourceText.includes(searchText);
+};
 
 // 接口描述索引签名
 interface StringMap {
   [key: string]: string;
 }
-const headers: StringMap = { "Content-Type": "application/json" };
+const requestHeaders: StringMap = {
+  "Content-Type": "application/json",
+  Authorization: "Bearer token",
+};
 
 // 接口合并 (Declaration Merging)
 interface Window {
@@ -48,5 +58,6 @@ interface Window {
 
 console.log("=== 03-interfaces ===");
 console.log(`User: ${user.name} (${user.email})`);
-console.log(`Employee: ${emp.name}, dept: ${emp.department}`);
+console.log(`Employee: ${employee.name}, dept: ${employee.department}`);
 console.log(`contains("hello", "ell") = ${contains("hello", "ell")}`);
+console.log(`Request content type: ${requestHeaders["Content-Type"]}`);
